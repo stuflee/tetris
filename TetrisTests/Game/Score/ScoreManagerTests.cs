@@ -23,7 +23,51 @@ namespace TetrisTests.Game.Score
             [TestCase]
             public void WhenNoRowsAreUpdatedNoScoreChangeHappens()
             {
+                var gameGridMock = new Mock<IGameGrid>();
+                var scoreManager = new ScoreManager(gameGridMock.Object);
 
+                gameGridMock.Raise(grid => grid.OnRowsRemoved += null, 0);
+
+                Assert.AreEqual(scoreManager.Score, 0);
+            }
+
+            [TestCase]
+            public void WhenMoreThanOneRowIsUpdatedScoreChangeHappens()
+            {
+                var gameGridMock = new Mock<IGameGrid>();
+                var scoreManager = new ScoreManager(gameGridMock.Object);
+
+                gameGridMock.Raise(grid => grid.OnRowsRemoved += null, 1);
+
+                Assert.GreaterOrEqual(scoreManager.Score, 1);
+            }
+
+            [TestCase]
+            public void WhenRowsAreRemovedScoreIsUpdated()
+            {
+                var gameGridMock = new Mock<IGameGrid>();
+                var scoreManager = new ScoreManager(gameGridMock.Object);
+
+                int score = 0;
+                scoreManager.OnScoreUpdated += (s) => { score = s; };
+
+                gameGridMock.Raise(grid => grid.OnRowsRemoved += null, 1);
+
+                Assert.GreaterOrEqual(score, 1);
+            }
+
+            [TestCase]
+            public void WhenShapeLandsScoreIsUpdated()
+            {
+                var gameGridMock = new Mock<IGameGrid>();
+                var scoreManager = new ScoreManager(gameGridMock.Object);
+
+                int score = 0;
+                scoreManager.OnScoreUpdated += (s) => { score = s; };
+
+                gameGridMock.Raise(grid => grid.OnShapeLanded += null);
+
+                Assert.GreaterOrEqual(score, 1);
             }
         }
     }
