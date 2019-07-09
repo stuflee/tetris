@@ -23,7 +23,7 @@ namespace TetrisTests.Game.Score
             [TestCase]
             public void WhenNoRowsAreUpdatedNoScoreChangeHappens()
             {
-                var gameGridMock = new Mock<IGameGrid>();
+                var gameGridMock = new Mock<IGameGridManager>();
                 var scoreManager = new ScoreManager(gameGridMock.Object);
 
                 gameGridMock.Raise(grid => grid.OnRowsRemoved += null, 0);
@@ -34,7 +34,7 @@ namespace TetrisTests.Game.Score
             [TestCase]
             public void WhenMoreThanOneRowIsUpdatedScoreChangeHappens()
             {
-                var gameGridMock = new Mock<IGameGrid>();
+                var gameGridMock = new Mock<IGameGridManager>();
                 var scoreManager = new ScoreManager(gameGridMock.Object);
 
                 gameGridMock.Raise(grid => grid.OnRowsRemoved += null, 1);
@@ -45,7 +45,7 @@ namespace TetrisTests.Game.Score
             [TestCase]
             public void WhenRowsAreRemovedScoreIsUpdated()
             {
-                var gameGridMock = new Mock<IGameGrid>();
+                var gameGridMock = new Mock<IGameGridManager>();
                 var scoreManager = new ScoreManager(gameGridMock.Object);
 
                 int score = 0;
@@ -59,7 +59,7 @@ namespace TetrisTests.Game.Score
             [TestCase]
             public void WhenShapeLandsScoreIsUpdated()
             {
-                var gameGridMock = new Mock<IGameGrid>();
+                var gameGridMock = new Mock<IGameGridManager>();
                 var scoreManager = new ScoreManager(gameGridMock.Object);
 
                 int score = 0;

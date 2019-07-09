@@ -4,13 +4,13 @@ namespace Tetris.Game
 {
     public delegate void RowsRemoved(int count);
 
-    public interface IGameGrid
+    public interface IGameGridManager
     {
         event RowsRemoved OnRowsRemoved;
         event Action OnShapeLanded;
 
         bool MoveDown();
-        bool RotateLeft();
+        bool Rotate();
         bool MoveRight();
         bool MoveLeft();
     }

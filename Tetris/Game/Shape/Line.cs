@@ -1,13 +1,11 @@
 ﻿using System.Drawing;
-using Tetris.Renderer;
 
 namespace Tetris.Game.Shape
 {
     public class Line : ITetrisShape
     {
-        public Line(Color colour)
+        public Line()
         {
-            Color = colour;
             Points = new Point[]
                 {
                     new Point(2,0),
@@ -17,9 +15,8 @@ namespace Tetris.Game.Shape
                 };
         }
 
-        private Line(Color colour, Point[] points)
+        private Line(Point[] points)
         {
-            Color = colour;
             Points = points;
         }
 
@@ -35,22 +32,10 @@ namespace Tetris.Game.Shape
             };
         }
 
-        public ITetrisShape RotateLeft()
+        public ITetrisShape Rotate()
         {
-            return Rotate();
+            return new Line(RotatePoints());
         }
-
-        public ITetrisShape RotateRight()
-        {
-            return Rotate();
-        }
-
-        private Line Rotate()
-        {
-            return new Line(Color, RotatePoints());
-        }
-
-        public Color Color { get; }
 
         public Point[] Points { get; }
     }

@@ -7,7 +7,7 @@ namespace Tetris.Winforms
 {
     public class GamePanel : Panel
     {
-        private GameGrid _gameGrid;
+        private GameGridManager _gameGrid;
         private int _xSize;
         private int _ySize;
         private Rect _baseRect;
@@ -21,7 +21,7 @@ namespace Tetris.Winforms
             _baseRect = new Rect(_xSize, _ySize);
         }
 
-        public GameGrid GameGrid
+        public GameGridManager GameGrid
         {
             get
             {
@@ -34,10 +34,10 @@ namespace Tetris.Winforms
                     return;
 
                 if (_gameGrid != null)
-                    _gameGrid.Update -= Refresh;
+                    _gameGrid.OnGridUpdated -= Refresh;
 
                 _gameGrid = value;
-                _gameGrid.Update += Refresh;
+                _gameGrid.OnGridUpdated += Refresh;
                 Width = _gameGrid.Width * _xSize + 1;
                 Height = _gameGrid.Height * _ySize + 1;
             }

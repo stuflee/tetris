@@ -15,13 +15,12 @@ namespace Tetris.Game.Shape
 
         private readonly Rotation _rotation;
 
-        public Tripod(Color colour) : this(colour, Rotation.Zero)
+        public Tripod() : this(Rotation.Zero)
         {
         }
 
-        private Tripod(Color colour, Rotation rotation)
+        private Tripod(Rotation rotation)
         {
-            Color = colour;
             _rotation = rotation;
             Points = GetPoints(_rotation);
         }
@@ -68,41 +67,22 @@ namespace Tetris.Game.Shape
             }
         }
 
-        public ITetrisShape RotateLeft()
+        public ITetrisShape Rotate()
         {
             switch (_rotation)
             {
                 case Rotation.Zero:
-                    return new Tripod(Color, Rotation.First);
+                    return new Tripod(Rotation.First);
                 case Rotation.First:
-                    return new Tripod(Color, Rotation.Second);
+                    return new Tripod(Rotation.Second);
                 case Rotation.Second:
-                    return new Tripod(Color, Rotation.Third);
+                    return new Tripod(Rotation.Third);
                 case Rotation.Third:
-                    return new Tripod(Color, Rotation.Zero);
+                    return new Tripod(Rotation.Zero);
                 default:
                     throw new ArgumentException("Enum case not implemented.");
             }
         }
-
-        public ITetrisShape RotateRight()
-        {
-            switch (_rotation)
-            {
-                case Rotation.Zero:
-                    return new Tripod(Color, Rotation.Third);
-                case Rotation.First:
-                    return new Tripod(Color, Rotation.Zero);
-                case Rotation.Second:
-                    return new Tripod(Color, Rotation.First);
-                case Rotation.Third:
-                    return new Tripod(Color, Rotation.Second);
-                default:
-                    throw new ArgumentException("Enum case not implemented.");
-            }
-        }
-
-        public Color Color { get; }
 
         public Point[] Points { get; }
     }

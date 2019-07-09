@@ -5,23 +5,14 @@ namespace Tetris.Game.Shape
 {
     public class RightL : ITetrisShape
     {
-        private enum Rotation
-        {
-            Zero = 0,
-            First = 1,
-            Second = 2,
-            Third = 3
-        }
-
         private readonly Rotation _rotation;
 
-        public RightL(Color colour) : this(colour, Rotation.Zero)
+        public RightL() : this(Rotation.Zero)
         {
         }
 
-        private RightL(Color colour, Rotation rotation)
+        private RightL(Rotation rotation)
         {
-            Color = colour;
             _rotation = rotation;
             Points = GetPoints(_rotation);
         }
@@ -68,35 +59,18 @@ namespace Tetris.Game.Shape
             }
         }
 
-        public ITetrisShape RotateLeft()
+        public ITetrisShape Rotate()
         {
             switch (_rotation)
             {
                 case Rotation.Zero:
-                    return new RightL(Color, Rotation.First);
+                    return new RightL(Rotation.First);
                 case Rotation.First:
-                    return new RightL(Color, Rotation.Second);
+                    return new RightL(Rotation.Second);
                 case Rotation.Second:
-                    return new RightL(Color, Rotation.Third);
+                    return new RightL(Rotation.Third);
                 case Rotation.Third:
-                    return new RightL(Color, Rotation.Zero);
-                default:
-                    throw new ArgumentException("Enum case not implemented.");
-            }
-        }
-
-        public ITetrisShape RotateRight()
-        {
-            switch (_rotation)
-            {
-                case Rotation.Zero:
-                    return new RightL(Color, Rotation.Third);
-                case Rotation.First:
-                    return new RightL(Color, Rotation.Zero);
-                case Rotation.Second:
-                    return new RightL(Color, Rotation.First);
-                case Rotation.Third:
-                    return new RightL(Color, Rotation.Second);
+                    return new RightL(Rotation.Zero);
                 default:
                     throw new ArgumentException("Enum case not implemented.");
             }

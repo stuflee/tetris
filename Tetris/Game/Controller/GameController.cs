@@ -8,17 +8,17 @@ namespace Tetris.Game.Controller
 
     public class GameController : IGameController
     {
-        private IGameGrid _grid;
+        private IGameGridManager _grid;
         private Dictionary<Direction, GameEventHandler> _events;
         
-        public GameController(IGameGrid grid)
+        public GameController(IGameGridManager grid)
         {
             _grid = grid ?? throw new ArgumentException("Grid cannot be null in creation of controller.");
 
             _events = new Dictionary<Direction, GameEventHandler>
             {
                 { Direction.Down, _grid.MoveDown },
-                { Direction.Up, _grid.RotateLeft },
+                { Direction.Up, _grid.Rotate },
                 { Direction.Left, _grid.MoveLeft },
                 { Direction.Right, _grid.MoveRight }
             };

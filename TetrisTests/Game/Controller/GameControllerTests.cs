@@ -20,7 +20,7 @@ namespace TetrisTests.Game.Controller
             [TestCase]
             public void EventsArePopulatedForAllDirecionValues()
             {
-                var gridMock = new Mock<IGameGrid>();
+                var gridMock = new Mock<IGameGridManager>();
                 var gameController = new GameController(gridMock.Object);
                 var events = gameController.Events;
                 foreach (Direction e in typeof(Direction).GetEnumValues())
@@ -37,7 +37,7 @@ namespace TetrisTests.Game.Controller
             [TestCase]
             public void WhenDownIsPressedGridIsMovedDown()
             {
-                var gridMock = new Mock<IGameGrid>();
+                var gridMock = new Mock<IGameGridManager>();
                 var controller = new GameController(gridMock.Object);
                 controller.KeyPressed(Direction.Down);
                 gridMock.Verify(grid => grid.MoveDown(), Times.Once);
@@ -47,7 +47,7 @@ namespace TetrisTests.Game.Controller
             [TestCase]
             public void WhenLeftIsPressedGridMoveLeftIsCalled()
             {
-                var gridMock = new Mock<IGameGrid>();
+                var gridMock = new Mock<IGameGridManager>();
                 var controller = new GameController(gridMock.Object);
                 controller.KeyPressed(Direction.Left);
                 gridMock.Verify(grid => grid.MoveLeft(), Times.Once);
@@ -57,7 +57,7 @@ namespace TetrisTests.Game.Controller
             [TestCase]
             public void WhenRightIsPressedGridMoveRightIsCalled()
             {
-                var gridMock = new Mock<IGameGrid>();
+                var gridMock = new Mock<IGameGridManager>();
                 var controller = new GameController(gridMock.Object);
                 controller.KeyPressed(Direction.Right);
                 gridMock.Verify(grid => grid.MoveRight(), Times.Once);
@@ -67,17 +67,17 @@ namespace TetrisTests.Game.Controller
             [TestCase]
             public void WhenUpIsPressedGridRotatedLeftIsCalled()
             {
-                var gridMock = new Mock<IGameGrid>();
+                var gridMock = new Mock<IGameGridManager>();
                 var controller = new GameController(gridMock.Object);
                 controller.KeyPressed(Direction.Up);
-                gridMock.Verify(grid => grid.RotateLeft(), Times.Once);
+                gridMock.Verify(grid => grid.Rotate(), Times.Once);
                 gridMock.VerifyNoOtherCalls();
             }
 
             [TestCase]
             public void WhenAnInvalidEnumIsPassedNoEventIsCalled()
             {
-                var gridMock = new Mock<IGameGrid>();
+                var gridMock = new Mock<IGameGridManager>();
                 var controller = new GameController(gridMock.Object);
                 controller.KeyPressed((Direction)100);
                 gridMock.VerifyNoOtherCalls();

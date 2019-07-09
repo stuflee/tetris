@@ -5,23 +5,14 @@ namespace Tetris.Game.Shape
 {
     public class MirrorZ : ITetrisShape
     {
-        private enum Orientation
-        {
-            Vertical,
-            Horizontal
-        }
-
-        private Orientation _orientation;
-
-        public MirrorZ(Color colour) : this(colour, Orientation.Horizontal)
+        public MirrorZ() : this(Orientation.Horizontal)
         {
         }
 
-        private MirrorZ(Color colour, Orientation orientation)
+        private MirrorZ(Orientation orientation)
         {
-            Color = colour;
-            _orientation = orientation;
-            Points = GetPoints(_orientation);
+            Orientation = orientation;
+            Points = GetPoints(Orientation);
         }
 
         //We have two phase rotation so we just reverse X and Y.
@@ -48,24 +39,14 @@ namespace Tetris.Game.Shape
             throw new ArgumentException("Enum out of range.");
         }
 
-        public ITetrisShape RotateLeft()
+        public ITetrisShape Rotate()
         {
-            return Rotate();
+            var orientation = Orientation == Orientation.Vertical ? Orientation.Horizontal : Orientation.Vertical;
+            return new MirrorZ(orientation);
         }
-
-        public ITetrisShape RotateRight()
-        {
-            return Rotate();
-        }
-
-        private MirrorZ Rotate()
-        {
-            var orientation = _orientation == Orientation.Vertical ? Orientation.Horizontal : Orientation.Vertical;
-            return new MirrorZ(Color, orientation);
-        }
-
-        public Color Color { get; }
 
         public Point[] Points { get; }
+
+        public Orientation Orientation { get; }
     }
 }

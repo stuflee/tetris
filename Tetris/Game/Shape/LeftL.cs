@@ -5,25 +5,14 @@ namespace Tetris.Game.Shape
 {
     public class LeftL : ITetrisShape
     {
-        private enum Rotation
-        {
-            Zero = 0,
-            First = 1,
-            Second = 2,
-            Third = 3
-        }
-
-        private readonly Rotation _rotation;
-
-        public LeftL(Color colour) : this(colour, Rotation.Zero)
+        public LeftL() : this(Rotation.Zero)
         {
         }
 
-        private LeftL(Color colour, Rotation rotation)
+        private LeftL(Rotation rotation)
         {
-            Color = colour;
-            _rotation = rotation;
-            Points = GetPoints(_rotation);
+            Rotation = rotation;
+            Points = GetPoints(Rotation);
         }
 
         //We have two phase rotation so we just reverse X and Y.
@@ -68,43 +57,26 @@ namespace Tetris.Game.Shape
             }
         }
 
-        public ITetrisShape RotateLeft()
+        public ITetrisShape Rotate()
         {
-            switch (_rotation)
+            switch (Rotation)
             {
                 case Rotation.Zero:
-                    return new LeftL(Color, Rotation.First);
+                    return new LeftL(Rotation.First);
                 case Rotation.First:
-                    return new LeftL(Color, Rotation.Second);
+                    return new LeftL(Rotation.Second);
                 case Rotation.Second:
-                    return new LeftL(Color, Rotation.Third);
+                    return new LeftL(Rotation.Third);
                 case Rotation.Third:
-                    return new LeftL(Color, Rotation.Zero);
+                    return new LeftL(Rotation.Zero);
                 default:
                     throw new ArgumentException("Enum case not implemented.");
             }
         }
-
-        public ITetrisShape RotateRight()
-        {
-            switch (_rotation)
-            {
-                case Rotation.Zero:
-                    return new LeftL(Color, Rotation.Third);
-                case Rotation.First:
-                    return new LeftL(Color, Rotation.Zero);
-                case Rotation.Second:
-                    return new LeftL(Color, Rotation.First);
-                case Rotation.Third:
-                    return new LeftL(Color, Rotation.Second);
-                default:
-                    throw new ArgumentException("Enum case not implemented.");
-            }
-        }
-
-        public Color Color { get; }
 
         public Point[] Points { get; }
+
+        public Rotation Rotation { get; }
 
     }
 }

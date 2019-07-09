@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Controller\GameControllerTests.cs" />
+    <Compile Include="Game\GameGridTests.cs" />
     <Compile Include="Game\Score\ScoreManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Winforms\RectangleTests.cs" />

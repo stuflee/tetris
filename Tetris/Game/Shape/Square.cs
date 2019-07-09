@@ -5,9 +5,8 @@ namespace Tetris.Game.Shape
 {
     public class Square : ITetrisShape
     {
-        public Square(Color colour)
+        public Square()
         {
-            Color = colour;
             Points = new Point[]
                 {
                     new Point(1,2),
@@ -17,17 +16,10 @@ namespace Tetris.Game.Shape
                 };
         }
 
-        public ITetrisShape RotateLeft()
+        public ITetrisShape Rotate()
         {
             return this;
         }
-
-        public ITetrisShape RotateRight()
-        {
-            return this;
-        }
-
-        public Color Color { get; }
 
         public Point[] Points { get; }
     }

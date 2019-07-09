@@ -6,9 +6,9 @@ namespace Tetris.Game.Score
 
     public class ScoreManager
     {
-        private IGameGrid _gameGrid;
+        private IGameGridManager _gameGrid;
 
-        public ScoreManager(IGameGrid gameGrid)
+        public ScoreManager(IGameGridManager gameGrid)
         {
             _gameGrid = gameGrid ?? throw new ArgumentException("GameGrid cannot be null");
             _gameGrid.OnRowsRemoved += ProcessRowsRemoved;

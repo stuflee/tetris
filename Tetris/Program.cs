@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using Tetris.Game;
+using Tetris.Game.Colors;
 using Tetris.Game.Controller;
 using Tetris.Game.Score;
-using Tetris.Renderer;
+using Tetris.Game.Shape;
 using Tetris.Winforms;
 
 namespace Tetris
@@ -19,7 +20,9 @@ namespace Tetris
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var gameGrid = new GameGrid(8, 20);
+            var shapeFactory = new TetrisShapeFactory(new Random());
+            var colorFactory = new ColorFactory(new Random());
+            var gameGrid = new GameGridManager(shapeFactory, colorFactory, 8, 20);
             var gameController = new GameController(gameGrid);
             var scoreManager = new ScoreManager(gameGrid);
 
