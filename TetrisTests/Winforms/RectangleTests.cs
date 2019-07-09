@@ -2,7 +2,7 @@
 using Tetris.Renderer;
 using System.Drawing;
 
-namespace TetrisTests
+namespace TetrisTests.Winforms
 {
     [TestFixture]
     public class RectTests
