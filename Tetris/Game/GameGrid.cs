@@ -28,7 +28,6 @@ namespace Tetris.Game
         private int _maxY;
         private Random r = new Random();
 
-        public delegate void OnUpdate();
 
         public GameGrid(int width, int height)
         {
@@ -102,8 +101,10 @@ namespace Tetris.Game
                 ClearFullRows();
 
                 _movingShape = GetNextShape();
+
+                OnShapeLanded?.Invoke();
             }
-            Update();
+            Update?.Invoke();
         }
 
         public void ClearFullRows()
@@ -135,45 +136,50 @@ namespace Tetris.Game
                 }
             }
 
-            OnRowsRemoved?.Invoke(rowsCleared);
+            if (rowsCleared > 0)
+                OnRowsRemoved?.Invoke(rowsCleared);
         }
 
         public bool MoveLeft()
         {
-            return CommitIfPossible(_movingShape.location.X - 1, _movingShape.location.Y, _movingShape.shape);
+            return MoveShapeIfPossible(_movingShape.location.X - 1, _movingShape.location.Y, _movingShape.shape);
 
         }
 
         public bool MoveRight()
         {
-            return CommitIfPossible(_movingShape.location.X + 1, _movingShape.location.Y, _movingShape.shape);
+            return MoveShapeIfPossible(_movingShape.location.X + 1, _movingShape.location.Y, _movingShape.shape);
         }
 
         public bool MoveDown()
         {
-            return CommitIfPossible(_movingShape.location.X, _movingShape.location.Y + 1, _movingShape.shape);
+            return MoveShapeIfPossible(_movingShape.location.X, _movingShape.location.Y + 1, _movingShape.shape);
         }
 
         public bool RotateLeft()
         {
             var shape = _movingShape.shape.RotateLeft();
-            return CommitIfPossible(_movingShape.location.X, _movingShape.location.Y, shape);
+            return MoveShapeIfPossible(_movingShape.location.X, _movingShape.location.Y, shape);
         }
 
-        public bool CommitIfPossible(int proposedX, int proposedY, ITetrisShape proposedShape)
+        public bool MoveShapeIfPossible(int proposedX, int proposedY, ITetrisShape proposedShape)
         {
-            if (CanCommit(proposedX, proposedY, proposedShape))
+            if (ShapeCanMove(proposedX, proposedY, proposedShape))
             {
                 _movingShape.location.X = proposedX;
                 _movingShape.location.Y = proposedY;
                 _movingShape.shape = proposedShape;
-                Update();
+                Update?.Invoke();
                 return true;
             }
+
+            if (ShapeIsOffTheScreen(proposedX, proposedY, proposedShape))
+                OnGameEnded?.Invoke();
+
             return false;
         }
 
-        public bool CanCommit(int proposedX, int proposedY, ITetrisShape proposedShape)
+        public bool ShapeCanMove(int proposedX, int proposedY, ITetrisShape proposedShape)
         {
             var cannotMove = proposedShape.Points.Any(pInner =>
                 (pInner.X + proposedX < 0 || pInner.X + proposedX == _maxX + 1) ||
@@ -182,9 +188,22 @@ namespace Tetris.Game
 
             return !cannotMove;
         }
+
+        public bool ShapeIsOffTheScreen(int proposedX, int proposedY, ITetrisShape proposedShape)
+        {
+            var isOffTheScreen = proposedShape.Points.Any(pInner =>
+                pInner.X + proposedX < 0 ||
+                pInner.Y + proposedY < 0);
+
+            return isOffTheScreen;
+        }
         
-        public event OnUpdate Update;
+        public event Action Update;
 
         public event RowsRemoved OnRowsRemoved;
+
+        public event Action OnShapeLanded;
+
+        public event Action OnGameEnded;
     }
 }

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Tetris.Game;
 using Tetris.Game.Controller;
+using Tetris.Game.Score;
 using Tetris.Renderer;
 using Tetris.Winforms;
 
@@ -18,16 +19,19 @@ namespace Tetris
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            var gameGrid = new GameGrid(8, 20);
+            var gameController = new GameController(gameGrid);
+            var scoreManager = new ScoreManager(gameGrid);
+
             var form = new TetrisForm();
-            var gamePanel = form.GamePanel;
-            var grid = new GameGrid(gamePanel.Width / 20, gamePanel.Height / 20);
-            var renderer = new PanelRenderer(form.GamePanel, grid, 20, 20);
-            var gameController = new WinFormsGameController(form, grid);
+            form.GameGrid = gameGrid;
+            form.GameController = gameController;
+            form.ScoreManager = scoreManager;
 
             Timer ticky;
             ticky = new Timer();
             ticky.Interval = 500;
-            ticky.Tick += (a, b) => grid.Tick();
+            ticky.Tick += (a, b) => gameGrid.Tick();
             ticky.Start();
 
 

@@ -1,26 +1,46 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Game;
+using Tetris.Renderer;
 
-namespace Tetris.Renderer
+namespace Tetris.Winforms
 {
-    public class PanelRenderer : IRenderer
+    public class GamePanel : Panel
     {
-        private Panel _panel;
+        private GameGrid _gameGrid;
         private int _xSize;
         private int _ySize;
         private Rect _baseRect;
-        private GameGrid _grid;
 
-        public PanelRenderer(Panel panel, GameGrid grid, int xSize, int ySize)
+        public GamePanel()
         {
-            _panel = panel;
-            _grid = grid;
-            _xSize = xSize;
-            _ySize = ySize;
-            _baseRect = new Rect(_xSize, ySize);
-            _panel.Paint += Panel_Paint;
-            _grid.Update += () => _panel.Refresh();
+            DoubleBuffered = true;
+            Paint += Panel_Paint;
+            _xSize = 20;
+            _ySize = 20;
+            _baseRect = new Rect(_xSize, _ySize);
+        }
+
+        public GameGrid GameGrid
+        {
+            get
+            {
+                return _gameGrid;
+            }
+
+            set
+            {
+                if (value == null)
+                    return;
+
+                if (_gameGrid != null)
+                    _gameGrid.Update -= Refresh;
+
+                _gameGrid = value;
+                _gameGrid.Update += Refresh;
+                Width = _gameGrid.Width * _xSize + 1;
+                Height = _gameGrid.Height * _ySize + 1;
+            }
         }
 
         public void Draw(Graphics g, Point p, Color color)
@@ -45,9 +65,13 @@ namespace Tetris.Renderer
 
         private void Panel_Paint(object sender, PaintEventArgs e)
         {
-            DrawGrid(e.Graphics, _grid.Width, _grid.Height);
-            foreach (var p in _grid.GetPoints())
+            if (_gameGrid == null)
+                return;
+
+            DrawGrid(e.Graphics, _gameGrid.Width, _gameGrid.Height);
+            foreach (var p in _gameGrid.GetPoints())
                 Draw(e.Graphics, p.Point, p.Color);
         }
+
     }
 }
