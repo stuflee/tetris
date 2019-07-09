@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Tetris.Game.Controller
 {
@@ -7,17 +8,20 @@ namespace Tetris.Game.Controller
 
     public class GameController : IGameController
     {
-        private GameGrid _grid;
+        private IGameGrid _grid;
         private Dictionary<Direction, GameEventHandler> _events;
         
-        public GameController(GameGrid grid)
+        public GameController(IGameGrid grid)
         {
-            _grid = grid;
-            _events = new Dictionary<Direction, GameEventHandler>();
-            _events.Add(Direction.Down, _grid.MoveDown);
-            _events.Add(Direction.Up, _grid.RotateLeft);
-            _events.Add(Direction.Left, _grid.MoveLeft);
-            _events.Add(Direction.Right, _grid.MoveRight);
+            _grid = grid ?? throw new ArgumentException("Grid cannot be null in creation of controller.");
+
+            _events = new Dictionary<Direction, GameEventHandler>
+            {
+                { Direction.Down, _grid.MoveDown },
+                { Direction.Up, _grid.RotateLeft },
+                { Direction.Left, _grid.MoveLeft },
+                { Direction.Right, _grid.MoveRight }
+            };
         }
 
         public void KeyPressed(Direction direction)
@@ -26,5 +30,8 @@ namespace Tetris.Game.Controller
             if (_events.TryGetValue(direction, out handler))
                 handler();
         }
+
+        public IDictionary<Direction, GameEventHandler> Events
+        { get { return new ReadOnlyDictionary<Direction, GameEventHandler>(_events); } }
     }
 }

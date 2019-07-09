@@ -80,7 +80,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ProcessKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

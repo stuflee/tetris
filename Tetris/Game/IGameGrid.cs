@@ -8,5 +8,10 @@ namespace Tetris.Game
     {
         event RowsRemoved OnRowsRemoved;
         event Action OnShapeLanded;
+
+        bool MoveDown();
+        bool RotateLeft();
+        bool MoveRight();
+        bool MoveLeft();
     }
 }

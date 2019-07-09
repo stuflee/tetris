@@ -7,6 +7,8 @@ namespace Tetris.Winforms
 {
     public partial class TetrisForm : Form
     {
+        public IGameController _gameController;
+
         public TetrisForm()
         {
             InitializeComponent();
@@ -33,6 +35,9 @@ namespace Tetris.Winforms
 
         public void ProcessKeyDown(object sender, KeyEventArgs e)
         {
+            if (GameController == null)
+                return;
+
             Direction key;
             switch (e.KeyCode)
             {
