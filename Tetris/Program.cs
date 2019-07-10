@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Tetris.Game;
 using Tetris.Game.Colors;
 using Tetris.Game.Controller;
+using Tetris.Game.Grid;
 using Tetris.Game.Score;
 using Tetris.Game.Shape;
 using Tetris.Winforms;
@@ -22,19 +23,20 @@ namespace Tetris
 
             var shapeFactory = new TetrisShapeFactory(new Random());
             var colorFactory = new ColorFactory(new Random());
-            var gameGrid = new GameGridManager(shapeFactory, colorFactory, 8, 20);
-            var gameController = new GameController(gameGrid);
-            var scoreManager = new ScoreManager(gameGrid);
+            var gameGrid = new GameGrid(8, 20);
+            var gameGridMgr = new GameGridManager(gameGrid, shapeFactory, colorFactory);
+            var gameController = new GameController(gameGridMgr);
+            var scoreManager = new ScoreManager(gameGridMgr);
 
             var form = new TetrisForm();
-            form.GameGrid = gameGrid;
+            form.GameGrid = gameGridMgr;
             form.GameController = gameController;
             form.ScoreManager = scoreManager;
 
             Timer ticky;
             ticky = new Timer();
             ticky.Interval = 500;
-            ticky.Tick += (a, b) => gameGrid.Tick();
+            ticky.Tick += (a, b) => gameGridMgr.Tick();
             ticky.Start();
 
 

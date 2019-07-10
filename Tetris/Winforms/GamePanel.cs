@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using Tetris.Game;
+using Tetris.Game.Grid;
 using Tetris.Renderer;
 
 namespace Tetris.Winforms

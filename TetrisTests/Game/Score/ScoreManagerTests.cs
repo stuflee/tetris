@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System;
-using Tetris.Game;
+using Tetris.Game.Grid;
 using Tetris.Game.Score;
 
 namespace TetrisTests.Game.Score

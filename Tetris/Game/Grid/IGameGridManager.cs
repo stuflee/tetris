@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tetris.Game
+namespace Tetris.Game.Grid
 {
     public delegate void RowsRemoved(int count);
 

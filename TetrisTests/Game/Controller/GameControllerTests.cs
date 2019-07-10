@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using Tetris.Game;
 using Tetris.Game.Controller;
+using Tetris.Game.Grid;
 
 namespace TetrisTests.Game.Controller
 {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
-using Tetris.Game;
 using Tetris.Game.Controller;
+using Tetris.Game.Grid;
 using Tetris.Game.Score;
 
 namespace Tetris.Winforms

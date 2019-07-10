@@ -6,7 +6,7 @@ namespace Tetris.Helper
     {
         public static bool IsWithinBounds(this Point p, int maxX, int maxY)
         {
-            return p.X > 0 && p.X < maxX && p.Y > 0 && p.Y < maxY;
+            return p.X >= 0 && p.X <= maxX && p.Y >= 0 && p.Y <= maxY;
         }
 
         public static Point Move(this Point p, Point offset)
