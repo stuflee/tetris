@@ -52,19 +52,16 @@
     <Compile Include="Game\Grid\ColouredPoint.cs" />
     <Compile Include="Game\Grid\GameGrid.cs" />
     <Compile Include="Game\Grid\GameGridManager.cs" />
+    <Compile Include="Game\Grid\IGameGrid.cs" />
     <Compile Include="Game\Grid\IGameGridManager.cs" />
     <Compile Include="Game\Grid\PositionedShape.cs" />
     <Compile Include="Game\IFactory.cs" />
-    <Compile Include="Game\RandomFactory.cs" />
+    <Compile Include="Game\RandomSelector.cs" />
     <Compile Include="Game\Score\ScoreManager.cs" />
-    <Compile Include="Game\Shape\Orientation.cs" />
-    <Compile Include="Game\Shape\LeftL.cs" />
-    <Compile Include="Game\Shape\MirrorZ.cs" />
-    <Compile Include="Game\Shape\RightL.cs" />
-    <Compile Include="Game\Shape\Rotation.cs" />
+    <Compile Include="Game\Shape\FourRotationShape.cs" />
+    <Compile Include="Game\Shape\PointHelper.cs" />
     <Compile Include="Game\Shape\TetrisShapeFactory.cs" />
-    <Compile Include="Game\Shape\Tripod.cs" />
-    <Compile Include="Game\Shape\Z.cs" />
+    <Compile Include="Game\Shape\TwoRotationShape.cs" />
     <Compile Include="Helper\PointsHelper.cs" />
     <Compile Include="Winforms\GamePanel.cs">
       <SubType>Component</SubType>
@@ -83,8 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Winforms\Rect.cs" />
     <Compile Include="Game\Shape\ITetrisShape.cs" />
-    <Compile Include="Game\Shape\Line.cs" />
-    <Compile Include="Game\Shape\Square.cs" />
+    <Compile Include="Game\Shape\StaticShape.cs" />
     <EmbeddedResource Include="Winforms\TetrisForm.resx">
       <DependentUpon>TetrisForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -23,7 +23,7 @@ namespace Tetris
 
             var shapeFactory = new TetrisShapeFactory(new Random());
             var colorFactory = new ColorFactory(new Random());
-            var gameGrid = new GameGrid(8, 20);
+            var gameGrid = new StaticGameGrid(8, 20);
             var gameGridMgr = new GameGridManager(gameGrid, shapeFactory, colorFactory);
             var gameController = new GameController(gameGridMgr);
             var scoreManager = new ScoreManager(gameGridMgr);

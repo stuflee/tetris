@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Tetris.Game.Colors
 {
-    class ColorFactory : RandomFactory<Color>
+    public class ColorFactory : RandomSelector<Color>
     {
         public ColorFactory(Random random) : 
             base(random, new List<Color> {

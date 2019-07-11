@@ -22,7 +22,7 @@ namespace TetrisTests.Game.Grid
             public void WhenConstructedColorIsSetCorrectly(string colorName)
             {
                 var color = Color.FromName(colorName);
-                var shape = new PositionedShape(new Square(), color, new Point(1, 1));
+                var shape = new PositionedShape(new StaticShape(new[] { new Point(1, 1) }), color, new Point(1, 1));
                 Assert.AreEqual(color, shape.Color);
             }
 
@@ -31,7 +31,7 @@ namespace TetrisTests.Game.Grid
             public void WhenConstructedLocationIsSetCorrectly(int X, int Y)
             {
                 var point = new Point(X, Y);
-                var shape = new PositionedShape(new Square(), Color.Red, point);
+                var shape = new PositionedShape(new StaticShape(new[] { new Point(1, 1) }), Color.Red, point);
                 Assert.AreEqual(point, shape.Location);
             }
         }

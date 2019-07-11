@@ -47,7 +47,7 @@
             // 
             this.lblScoreValue.AutoSize = true;
             this.lblScoreValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScoreValue.Location = new System.Drawing.Point(100, 13);
+            this.lblScoreValue.Location = new System.Drawing.Point(88, 13);
             this.lblScoreValue.Name = "lblScoreValue";
             this.lblScoreValue.ScoreManager = null;
             this.lblScoreValue.Size = new System.Drawing.Size(74, 25);
@@ -60,9 +60,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gamePanel.GameGrid = null;
-            this.gamePanel.Location = new System.Drawing.Point(105, 89);
+            this.gamePanel.Location = new System.Drawing.Point(68, 65);
             this.gamePanel.Name = "gamePanel";
-            this.gamePanel.Size = new System.Drawing.Size(90, 260);
+            this.gamePanel.Size = new System.Drawing.Size(96, 304);
             this.gamePanel.TabIndex = 0;
             // 
             // TetrisForm
@@ -70,16 +70,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(284, 352);
+            this.ClientSize = new System.Drawing.Size(241, 396);
             this.Controls.Add(this.lblScoreValue);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.gamePanel);
             this.DoubleBuffered = true;
             this.Name = "TetrisForm";
-            this.Text = "Form1";
+            this.Text = "Tetris";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ProcessKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

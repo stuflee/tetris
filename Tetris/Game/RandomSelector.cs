@@ -4,15 +4,21 @@ using System.Collections.ObjectModel;
 
 namespace Tetris.Game
 {
-    public class RandomFactory<T> : IFactory<T>
+    public class RandomSelector<T> : IFactory<T>
     {
         private IList<T> _items;
         private Random _random;
-        private int _nextItemIndex;
+        private int _nextItemIndex = -1;
 
-        public RandomFactory(Random random, IList<T> items)
+        public RandomSelector(Random random, IList<T> items)
         {
-            _random = random;
+            _random = random ?? throw new ArgumentNullException("random"); ;
+
+            if (items == null)
+                throw new ArgumentNullException("items");
+
+            if (items.Count == 0)
+                throw new ArgumentException("Expected more than one item to use in factory.");
 
             _items = new List<T>(items);
         }
@@ -26,6 +32,7 @@ namespace Tetris.Game
             finally
             {
                 _nextItemIndex = -1;
+                OnSelectionMade?.Invoke();
             }
         }
 
@@ -41,5 +48,7 @@ namespace Tetris.Game
         {
             get { return new ReadOnlyCollection<T>(_items); }
         }
+
+        public event Action OnSelectionMade;
     }
 }

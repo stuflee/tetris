@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,18 +8,18 @@ using Tetris.Helper;
 
 namespace Tetris.Game.Grid
 {
-    public class GameGridManager : IGameGridManager
+    public class GameGridManager : IEnumerable<ColouredPoint>, IGameGridManager
     {
         private static Point DownOne = new Point(0, 1);
         private static Point LeftOne = new Point(-1, 0);
         private static Point RightOne = new Point(1, 0);
 
-        private GameGrid _gameGrid;
+        private IGameGrid _gameGrid;
         private PositionedShape _movingShape;
         private IFactory<ITetrisShape> _shapeFactory;
         private IFactory<Color> _colorFactory;
 
-        public GameGridManager(GameGrid gameGrid, IFactory<ITetrisShape> shapeFactory, IFactory<Color> colorFactory)
+        public GameGridManager(IGameGrid gameGrid, IFactory<ITetrisShape> shapeFactory, IFactory<Color> colorFactory)
         {
             _shapeFactory = shapeFactory ?? throw new ArgumentException("Shape factory was null");
             _colorFactory = colorFactory ?? throw new ArgumentException("Color factory was null");
@@ -39,21 +40,13 @@ namespace Tetris.Game.Grid
 
         private PositionedShape GetNextShape()
         {
-            var location = new Point(_gameGrid.MaxX / 2 - 2, -3);
             var shape = _shapeFactory.GetNext();
+            //We want the shape to appear with the first row on the screen.
+            var startingY = -shape.Points.Select(p => p.Y).Max();
+            var location = new Point((_gameGrid.Width - 1) / 2, startingY);
             var colour = _colorFactory.GetNext();
 
             return new PositionedShape(shape, colour, location);
-        }
-
-        public IEnumerable<ColouredPoint> GetPoints()
-        {
-            foreach (var p in _gameGrid)
-                yield return p;
-
-            if (_movingShape != null)
-                foreach (var p in _movingShape.Shape.Points)
-                    yield return new ColouredPoint( _movingShape.Color, p.Move(_movingShape.Location));
         }
 
         public void Tick()
@@ -66,11 +59,30 @@ namespace Tetris.Game.Grid
 
                 OnShapeLanded?.Invoke();
 
-                var rows = _gameGrid.ClearFullRows();
+                var rows = ClearFullRows();
                 if (rows > 0)
                     OnRowsRemoved?.Invoke(rows);
             }
             OnGridUpdated?.Invoke();
+        }
+
+        public int ClearFullRows()
+        {
+            var result = _gameGrid.GroupBy(p => p.Point.Y)
+                                .OrderBy(grp => grp.Count())
+                                .Select(grp => new { Y = grp.Key, Values = grp.ToList() })
+                                .Where(val => val.Values.Count() == Width);
+
+            int rowsRemoved = 0;
+            result.ForEach(item => {
+                    _gameGrid.RemoveRange(item.Values);
+                    var toRemove = _gameGrid.Where(p => p.Point.Y < item.Y).ToList();
+                    _gameGrid.RemoveRange(toRemove);
+                    _gameGrid.AddRange(toRemove.ConvertAll(p => p.Move(new Point(0, 1))));
+                    rowsRemoved += 1;
+            });
+
+            return rowsRemoved;
         }
 
         public bool MoveLeft()
@@ -109,6 +121,26 @@ namespace Tetris.Game.Grid
                 OnGameEnded?.Invoke();
 
             return false;
+        }
+
+        public IEnumerator<ColouredPoint> GetEnumerator()
+        {
+            foreach (var p in _gameGrid)
+                yield return p;
+
+            if (_movingShape != null)
+                foreach (var p in _movingShape.Shape.Points)
+                    yield return new ColouredPoint(_movingShape.Color, p.Move(_movingShape.Location));
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var p in _gameGrid)
+                yield return p;
+
+            if (_movingShape != null)
+                foreach (var p in _movingShape.Shape.Points)
+                    yield return new ColouredPoint(_movingShape.Color, p.Move(_movingShape.Location));
         }
 
         public event Action OnGridUpdated;

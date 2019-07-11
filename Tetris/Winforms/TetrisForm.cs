@@ -18,7 +18,7 @@ namespace Tetris.Winforms
 
         private void GamePanel_Resize(object sender, System.EventArgs e)
         {
-            ClientSize = new System.Drawing.Size(gamePanel.Size.Width + 2 * gamePanel.Location.X, gamePanel.Size.Height + gamePanel.Location.Y);
+            ClientSize = new System.Drawing.Size(gamePanel.Size.Width + 2 * gamePanel.Location.X, gamePanel.Size.Height + gamePanel.Location.Y * 2);
         }
 
         public GameGridManager GameGrid {

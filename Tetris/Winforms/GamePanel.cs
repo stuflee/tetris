@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Game.Grid;
+using Tetris.Game.Shape;
 using Tetris.Renderer;
 
 namespace Tetris.Winforms
@@ -8,6 +10,7 @@ namespace Tetris.Winforms
     public class GamePanel : Panel
     {
         private GameGridManager _gameGrid;
+        private TetrisShapeFactory _shapeFactory;
         private int _xSize;
         private int _ySize;
         private Rect _baseRect;
@@ -43,6 +46,25 @@ namespace Tetris.Winforms
             }
         }
 
+        public TetrisShapeFactory ShapeFactory
+        {
+            get { return _shapeFactory; }
+            set
+            {
+                if (_shapeFactory != null)
+                    _shapeFactory.OnSelectionMade -= UpdateGrid;
+
+                _shapeFactory = value;
+                if (value != null)
+                    _shapeFactory.OnSelectionMade += UpdateGrid;
+            }
+        }
+
+        private void UpdateGrid()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Draw(Graphics g, Point p, Color color)
         {
             using (var brush = new SolidBrush(color))
@@ -69,7 +91,7 @@ namespace Tetris.Winforms
                 return;
 
             DrawGrid(e.Graphics, _gameGrid.Width, _gameGrid.Height);
-            foreach (var p in _gameGrid.GetPoints())
+            foreach (var p in _gameGrid)
                 Draw(e.Graphics, p.Point, p.Color);
         }
 

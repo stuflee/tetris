@@ -18,7 +18,7 @@ namespace Tetris.Game.Grid
         }
 
         public Color Color { get; }
-        public Point Point { get; }
+        public Point Point { get; set; }
 
         public override bool Equals(object obj)
         {
