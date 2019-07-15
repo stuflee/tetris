@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Shape;
 using Tetris.Helper;
 
-namespace Tetris.Game.Grid
+namespace Tetris.Core.Game.Grid
 {
     public class PositionedShape
     {

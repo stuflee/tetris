@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System;
 
-namespace Tetris.Game.Shape
+namespace Tetris.Core.Game.Shape
 {
     public static class PointHelper
     {

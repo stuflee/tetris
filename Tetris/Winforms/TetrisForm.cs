@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using Tetris.Game.Controller;
-using Tetris.Game.Grid;
-using Tetris.Game.Score;
+using Tetris.Core.Game.Controller;
+using Tetris.Core.Game.Grid;
+using Tetris.Core.Game.Score;
 
 namespace Tetris.Winforms
 {
@@ -24,7 +24,6 @@ namespace Tetris.Winforms
             get { return previewPanel.GameGrid; }
             set { previewPanel.GameGrid = value; }
         }
-
 
         public ScoreManager ScoreManager {
             get { return lblScoreValue.ScoreManager; }

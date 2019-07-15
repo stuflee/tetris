@@ -2,10 +2,10 @@
 using NUnit.Framework;
 using System;
 using System.Drawing;
-using Tetris.Game.Grid;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Grid;
+using Tetris.Core.Game.Shape;
 
-namespace TetrisTests.Game.Grid
+namespace Tetris.Core.Tests.Game.Grid
 {
     [TestFixture]
     public class PositionedShapeTests

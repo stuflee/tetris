@@ -2,7 +2,7 @@
 using System.Drawing;
 using Tetris.Helper;
 
-namespace Tetris.Game.Grid
+namespace Tetris.Core.Game.Grid
 {
     public class ColouredPoint : IEquatable<ColouredPoint>
     {

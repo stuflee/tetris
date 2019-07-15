@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Drawing;
-using Tetris.Game.Grid;
+using Tetris.Core.Game.Grid;
 
-namespace TetrisTests.Game.Grid
+namespace Tetris.Core.Tests.Game.Grid
 {
     [TestFixture]
     public class ColouredPointTests

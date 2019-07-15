@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Shape;
 
-namespace TetrisTests.Game.Shape
+namespace Tetris.Core.Tests.Game.Shape
 {
     [TestFixture]
     public class TetrisShapeFactoryTests
