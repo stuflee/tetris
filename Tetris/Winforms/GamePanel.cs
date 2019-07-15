@@ -1,13 +1,15 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using Tetris.Game;
+using Tetris.Game.Grid;
+using Tetris.Game.Shape;
 using Tetris.Renderer;
 
 namespace Tetris.Winforms
 {
     public class GamePanel : Panel
     {
-        private GameGrid _gameGrid;
+        private IGameGrid _gameGrid;
         private int _xSize;
         private int _ySize;
         private Rect _baseRect;
@@ -16,12 +18,31 @@ namespace Tetris.Winforms
         {
             DoubleBuffered = true;
             Paint += Panel_Paint;
-            _xSize = 20;
-            _ySize = 20;
-            _baseRect = new Rect(_xSize, _ySize);
+            XSize = 20;
+            YSize = 20;
         }
 
-        public GameGrid GameGrid
+        public int XSize
+        {
+            get { return _xSize; }
+            set
+            {
+                _xSize = value;
+                _baseRect = new Rect(_xSize, _ySize);
+            }
+        }
+
+        public int YSize
+        {
+            get { return _ySize; }
+            set
+            {
+                _ySize = value;
+                _baseRect = new Rect(_xSize, _ySize);
+            }
+        }
+
+        public IGameGrid GameGrid
         {
             get
             {
@@ -33,11 +54,7 @@ namespace Tetris.Winforms
                 if (value == null)
                     return;
 
-                if (_gameGrid != null)
-                    _gameGrid.Update -= Refresh;
-
                 _gameGrid = value;
-                _gameGrid.Update += Refresh;
                 Width = _gameGrid.Width * _xSize + 1;
                 Height = _gameGrid.Height * _ySize + 1;
             }
@@ -69,7 +86,7 @@ namespace Tetris.Winforms
                 return;
 
             DrawGrid(e.Graphics, _gameGrid.Width, _gameGrid.Height);
-            foreach (var p in _gameGrid.GetPoints())
+            foreach (var p in _gameGrid)
                 Draw(e.Graphics, p.Point, p.Color);
         }
 

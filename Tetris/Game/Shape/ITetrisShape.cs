@@ -4,11 +4,7 @@ namespace Tetris.Game.Shape
 {
     public interface ITetrisShape
     {
-        ITetrisShape RotateLeft();
-
-        ITetrisShape RotateRight();
-
-        Color Color { get; }
+        ITetrisShape Rotate();
 
         Point[] Points { get; }
     }

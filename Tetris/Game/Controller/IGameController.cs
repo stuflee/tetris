@@ -12,6 +12,6 @@
 
     public interface IGameController
     {
-        void KeyPressed(Direction direction);
+        bool KeyPressed(Direction direction);
     }
 }

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Game;
+using Tetris.Game.Colors;
 using Tetris.Game.Controller;
+using Tetris.Game.Grid;
 using Tetris.Game.Score;
-using Tetris.Renderer;
+using Tetris.Game.Shape;
+using Tetris.Helper;
 using Tetris.Winforms;
 
 namespace Tetris
@@ -19,19 +23,55 @@ namespace Tetris
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            var shapeFactory = new TetrisShapeFactory(new Random());
+            var colorFactory = new ColorFactory(new Random());
             var gameGrid = new GameGrid(8, 20);
-            var gameController = new GameController(gameGrid);
-            var scoreManager = new ScoreManager(gameGrid);
+            var previewGameGrid = new GameGrid(6, 6);
+            var gameGridMgr = new GameGridShapeDecorator(gameGrid);
+            var gameController = new GameController(gameGridMgr);
+            var scoreManager = new ScoreManager();
+
+            Action updatePreviewPane = () =>
+            {
+                previewGameGrid.Clear();
+                var nextShape = shapeFactory.PeekNext();
+                var nextColour = colorFactory.PeekNext();
+                previewGameGrid.AddRange(
+                    Array.ConvertAll(nextShape.Points,
+                    p => new ColouredPoint(nextColour, p.Move(new Point(3, 3)))));
+            };
 
             var form = new TetrisForm();
-            form.GameGrid = gameGrid;
+            form.PreviewGrid = previewGameGrid;
+            form.GameGrid = gameGridMgr;
             form.GameController = gameController;
             form.ScoreManager = scoreManager;
 
-            Timer ticky;
-            ticky = new Timer();
-            ticky.Interval = 500;
-            ticky.Tick += (a, b) => gameGrid.Tick();
+            gameGridMgr.SetShape(shapeFactory.GetNext(), colorFactory.GetNext());
+            updatePreviewPane();
+
+            Timer ticky = new Timer()
+            {
+                Interval = 500,
+            };
+            ticky.Tick += (a, b) =>
+            {
+                if (!gameGridMgr.MoveDown())
+                {
+                    if (!gameGridMgr.CommitShape())
+                    {
+                        ticky.Stop();
+                        return;
+                    }
+                    gameGridMgr.SetShape(shapeFactory.GetNext(), colorFactory.GetNext());
+                    updatePreviewPane();
+                    scoreManager.ProcessShapeLanded();
+                }
+                var rows = gameGridMgr.ClearFullRows();
+                if (rows > 0) scoreManager.ProcessRowsRemoved(rows);
+
+                form.Refresh();
+            };
             ticky.Start();
 
 

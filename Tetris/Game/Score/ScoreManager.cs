@@ -1,28 +1,34 @@
-﻿namespace Tetris.Game.Score
+﻿using System;
+using Tetris.Game.Grid;
+
+namespace Tetris.Game.Score
 {
     public delegate void ScoreUpdated(int newScore);
 
     public class ScoreManager
     {
-        private IGameGrid _gameGrid;
-
-        public ScoreManager(IGameGrid gameGrid)
+        public ScoreManager()
         {
-            _gameGrid = gameGrid;
-            _gameGrid.OnRowsRemoved += ProcessRowsRemoved;
-            _gameGrid.OnShapeLanded += ProcessShapeLanded;
         }
 
         public void ProcessShapeLanded()
         {
-            Score += 100;
-            OnScoreUpdated(Score);
+            UpdateScore(100);
         }
 
         public void ProcessRowsRemoved(int rowsRemoved)
         {
-            Score += 500 * (2 ^ (rowsRemoved));
-            OnScoreUpdated(Score);
+            if (rowsRemoved == 0)
+                return;
+            
+            UpdateScore(500 * (int)Math.Round(Math.Pow(2, rowsRemoved)));
+        }
+
+        private void UpdateScore(int addition)
+        {
+            Score += addition;
+
+            OnScoreUpdated?.Invoke(Score);
         }
 
         public int Score { get; private set; }
