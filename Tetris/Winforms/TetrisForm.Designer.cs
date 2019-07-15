@@ -28,82 +28,114 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.testrisLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.previewPanel = new Tetris.Winforms.GamePanel();
+            this.gamePanel = new Tetris.Winforms.GamePanel();
+            this.scorePanel = new System.Windows.Forms.Panel();
             this.lblScore = new System.Windows.Forms.Label();
             this.lblScoreValue = new Tetris.Winforms.ScoreLabel();
-            this.gamePanel = new Tetris.Winforms.GamePanel();
-            this.previewPanel = new Tetris.Winforms.GamePanel();
+            this.testrisLayoutPanel.SuspendLayout();
+            this.scorePanel.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // testrisLayoutPanel
+            // 
+            this.testrisLayoutPanel.AutoSize = true;
+            this.testrisLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.testrisLayoutPanel.Controls.Add(this.scorePanel);
+            this.testrisLayoutPanel.Controls.Add(this.previewPanel);
+            this.testrisLayoutPanel.Controls.Add(this.gamePanel);
+            this.testrisLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.testrisLayoutPanel.Location = new System.Drawing.Point(4, 4);
+            this.testrisLayoutPanel.Name = "testrisLayoutPanel";
+            this.testrisLayoutPanel.Size = new System.Drawing.Size(716, 959);
+            this.testrisLayoutPanel.TabIndex = 3;
+            // 
+            // previewPanel
+            // 
+            this.previewPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.previewPanel.GameGrid = null;
+            this.previewPanel.Location = new System.Drawing.Point(291, 46);
+            this.previewPanel.Margin = new System.Windows.Forms.Padding(15);
+            this.previewPanel.Name = "previewPanel";
+            this.previewPanel.Size = new System.Drawing.Size(133, 146);
+            this.previewPanel.TabIndex = 2;
+            this.previewPanel.XSize = 15;
+            this.previewPanel.YSize = 15;
+            // 
+            // gamePanel
+            // 
+            this.gamePanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gamePanel.GameGrid = null;
+            this.gamePanel.Location = new System.Drawing.Point(15, 222);
+            this.gamePanel.Margin = new System.Windows.Forms.Padding(15);
+            this.gamePanel.Name = "gamePanel";
+            this.gamePanel.Size = new System.Drawing.Size(686, 722);
+            this.gamePanel.TabIndex = 3;
+            this.gamePanel.XSize = 20;
+            this.gamePanel.YSize = 20;
+            // 
+            // scorePanel
+            // 
+            this.scorePanel.AutoSize = true;
+            this.scorePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.scorePanel.Controls.Add(this.lblScoreValue);
+            this.scorePanel.Controls.Add(this.lblScore);
+            this.scorePanel.Location = new System.Drawing.Point(3, 3);
+            this.scorePanel.Name = "scorePanel";
+            this.scorePanel.Size = new System.Drawing.Size(170, 25);
+            this.scorePanel.TabIndex = 4;
             // 
             // lblScore
             // 
             this.lblScore.AutoSize = true;
             this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScore.Location = new System.Drawing.Point(13, 13);
+            this.lblScore.Location = new System.Drawing.Point(3, 0);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(74, 25);
-            this.lblScore.TabIndex = 1;
+            this.lblScore.TabIndex = 2;
             this.lblScore.Text = "Score:";
             // 
             // lblScoreValue
             // 
             this.lblScoreValue.AutoSize = true;
             this.lblScoreValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScoreValue.Location = new System.Drawing.Point(88, 13);
+            this.lblScoreValue.Location = new System.Drawing.Point(93, 0);
             this.lblScoreValue.Name = "lblScoreValue";
             this.lblScoreValue.ScoreManager = null;
             this.lblScoreValue.Size = new System.Drawing.Size(74, 25);
-            this.lblScoreValue.TabIndex = 2;
+            this.lblScoreValue.TabIndex = 3;
             this.lblScoreValue.Text = "Score:";
-            // 
-            // gamePanel
-            // 
-            this.gamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gamePanel.GameGrid = null;
-            this.gamePanel.Location = new System.Drawing.Point(12, 193);
-            this.gamePanel.Name = "gamePanel";
-            this.gamePanel.Size = new System.Drawing.Size(160, 470);
-            this.gamePanel.TabIndex = 0;
-            // 
-            // previewPanel
-            // 
-            this.previewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.previewPanel.GameGrid = null;
-            this.previewPanel.Location = new System.Drawing.Point(14, 41);
-            this.previewPanel.Name = "previewPanel";
-            this.previewPanel.Size = new System.Drawing.Size(158, 146);
-            this.previewPanel.TabIndex = 1;
-            this.previewPanel.XSize = 15;
-            this.previewPanel.YSize = 15;
+            this.lblScoreValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // TetrisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(305, 675);
-            this.Controls.Add(this.previewPanel);
-            this.Controls.Add(this.lblScoreValue);
-            this.Controls.Add(this.lblScore);
-            this.Controls.Add(this.gamePanel);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(698, 915);
+            this.Controls.Add(this.testrisLayoutPanel);
             this.DoubleBuffered = true;
             this.Name = "TetrisForm";
             this.Text = "Tetris";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ProcessKeyDown);
+            this.testrisLayoutPanel.ResumeLayout(false);
+            this.testrisLayoutPanel.PerformLayout();
+            this.scorePanel.ResumeLayout(false);
+            this.scorePanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private GamePanel gamePanel;
-        private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.FlowLayoutPanel testrisLayoutPanel;
+        private System.Windows.Forms.Panel scorePanel;
         private ScoreLabel lblScoreValue;
+        private System.Windows.Forms.Label lblScore;
         private GamePanel previewPanel;
+        private GamePanel gamePanel;
     }
 }
 

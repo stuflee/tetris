@@ -26,7 +26,7 @@ namespace Tetris
             var shapeFactory = new TetrisShapeFactory(new Random());
             var colorFactory = new ColorFactory(new Random());
             var gameGrid = new GameGrid(8, 20);
-            var previewGameGrid = new GameGrid(6, 6);
+            var previewGameGrid = new GameGrid(5, 5);
             var gameGridMgr = new GameGridShapeDecorator(gameGrid);
             var gameController = new GameController(gameGridMgr);
             var scoreManager = new ScoreManager();
@@ -38,7 +38,7 @@ namespace Tetris
                 var nextColour = colorFactory.PeekNext();
                 previewGameGrid.AddRange(
                     Array.ConvertAll(nextShape.Points,
-                    p => new ColouredPoint(nextColour, p.Move(new Point(3, 3)))));
+                    p => new ColouredPoint(nextColour, p.Move(new Point((previewGameGrid.Width-1) / 2, 2)))));
             };
 
             var form = new TetrisForm();
