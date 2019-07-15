@@ -1,7 +1,7 @@
 ﻿
 using System.Drawing;
 
-namespace Tetris.Renderer
+namespace Tetris.Winforms
 {
     public class Rect
     {

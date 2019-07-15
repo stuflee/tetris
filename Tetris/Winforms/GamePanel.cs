@@ -1,9 +1,6 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Game.Grid;
-using Tetris.Game.Shape;
-using Tetris.Renderer;
 
 namespace Tetris.Winforms
 {
@@ -63,14 +60,15 @@ namespace Tetris.Winforms
         public void Draw(Graphics g, Point p, Color color)
         {
             using (var brush = new SolidBrush(color))
-            {
                 g.FillPolygon(brush, _baseRect.ToPoints(p.X * _xSize, p.Y * _ySize));
-            }
+
+            using (var pen = new Pen(Color.LightGray))
+                g.DrawPolygon(pen, _baseRect.ToPoints(p.X * _xSize, p.Y * _ySize));
         }
 
         public void DrawGrid(Graphics g, int width, int height)
         {
-            using (var brush = new Pen(Color.LightGray))
+            using (var brush = new Pen(Color.DarkGray))
             {
                 for (int i = 0; i <= width; i++)
                     g.DrawLine(brush, new Point(i * _xSize, 0), new Point(i * _xSize, height * _ySize));
@@ -85,7 +83,10 @@ namespace Tetris.Winforms
             if (_gameGrid == null)
                 return;
 
-            DrawGrid(e.Graphics, _gameGrid.Width, _gameGrid.Height);
+            using (var brush = new SolidBrush(Color.Black))
+                e.Graphics.FillRectangle(brush, new Rectangle(0, 0, this.Width, this.Height));
+
+                DrawGrid(e.Graphics, _gameGrid.Width, _gameGrid.Height);
             foreach (var p in _gameGrid)
                 Draw(e.Graphics, p.Point, p.Color);
         }

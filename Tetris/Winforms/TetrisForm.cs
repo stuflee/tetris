@@ -12,7 +12,6 @@ namespace Tetris.Winforms
         public TetrisForm()
         {
             InitializeComponent();
-
         }
 
         public IGameGrid GameGrid {
