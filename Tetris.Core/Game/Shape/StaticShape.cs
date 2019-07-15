@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Tetris.Game.Shape
+namespace Tetris.Core.Game.Shape
 {
     public class StaticShape : ITetrisShape
     {

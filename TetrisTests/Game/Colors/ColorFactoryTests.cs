@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Tetris.Game.Colors;
+using Tetris.Core.Game.Colors;
 
-namespace TetrisTests.Game.Colors
+namespace Tetris.Core.Tests.Game.Colors
 {
     public class ColorFactoryTests
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Shape;
 
-namespace Tetris.Game.Grid
+namespace Tetris.Core.Game.Grid
 {
     public delegate void RowsRemoved(int count);
 

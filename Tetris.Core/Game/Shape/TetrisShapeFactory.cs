@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Tetris.Game.Shape
+namespace Tetris.Core.Game.Shape
 {
     public class TetrisShapeFactory : RandomSelector<ITetrisShape>
     {

@@ -1,11 +1,10 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System;
-using Tetris.Game;
-using Tetris.Game.Controller;
-using Tetris.Game.Grid;
+using Tetris.Core.Game.Controller;
+using Tetris.Core.Game.Grid;
 
-namespace TetrisTests.Game.Controller
+namespace Tetris.Core.Tests.Game.Controller
 {
     [TestFixture]
     public class GameControllerTests

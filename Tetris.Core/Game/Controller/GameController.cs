@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Tetris.Game.Grid;
+using Tetris.Core.Game.Grid;
 
-namespace Tetris.Game.Controller
+namespace Tetris.Core.Game.Controller
 {
     public delegate bool GameEventHandler();
 

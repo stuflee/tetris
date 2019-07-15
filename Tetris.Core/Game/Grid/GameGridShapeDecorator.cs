@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Shape;
 using Tetris.Helper;
 
-namespace Tetris.Game.Grid
+namespace Tetris.Core.Game.Grid
 {
     public class GameGridShapeDecorator : IGameGridShapeDecorator, IGameGrid
     {
@@ -15,10 +15,10 @@ namespace Tetris.Game.Grid
         private static Point RightOne = new Point(1, 0);
         private static Point NullOffset = new Point(0, 0);
 
-        private GameGrid _gameGrid;
+        private IEditableGameGrid _gameGrid;
         private PositionedShape _movingShape;
 
-        public GameGridShapeDecorator(GameGrid gameGrid)
+        public GameGridShapeDecorator(IEditableGameGrid gameGrid)
         {
             _gameGrid = gameGrid ?? throw new ArgumentNullException("gameGrid");
 
@@ -46,14 +46,11 @@ namespace Tetris.Game.Grid
             if (_movingShape == null)
                 return true;
 
-            var locatedPoints = _movingShape.Shape.Points.Select(p => p.Move(_movingShape.Location));
-            if (!_gameGrid.CanAddPoints(locatedPoints))
+            var locatedPoints = _movingShape.Shape.Points.Select(p => new ColouredPoint(_movingShape.Color, p.Move(_movingShape.Location)));
+            if (!_gameGrid.TryAdd(locatedPoints))
                 return false;
 
-            var points = locatedPoints.Select(p => new ColouredPoint(_movingShape.Color, p));
-            _gameGrid.AddRange(points);
             _movingShape = null;
-
             return true;
         }
 
@@ -69,7 +66,7 @@ namespace Tetris.Game.Grid
                     _gameGrid.RemoveRange(item.Values);
                     var toRemove = _gameGrid.Where(p => p.Point.Y < item.Y).ToList();
                     _gameGrid.RemoveRange(toRemove);
-                    _gameGrid.AddRange(toRemove.ConvertAll(p => p.Move(new Point(0, 1))));
+                    _gameGrid.TryAdd(toRemove.ConvertAll(p => p.Move(new Point(0, 1))));
                     rowsRemoved += 1;
             });
             return rowsRemoved;
@@ -109,8 +106,8 @@ namespace Tetris.Game.Grid
 
         private bool MoveShapeIfPossible(PositionedShape proposedShape)
         {
-            var positionedPoints = Array.ConvertAll(proposedShape.Shape.Points, p => p.Move(proposedShape.Location));
-            if (!_gameGrid.CanAddPoints(positionedPoints.Where(p => p.Y >= 0)))
+            var positionedPoints = Array.ConvertAll(proposedShape.Shape.Points, p => new ColouredPoint(proposedShape.Color, p.Move(proposedShape.Location)));
+            if (!_gameGrid.CanAdd(positionedPoints.Where(p => p.Point.Y >= 0)))
                 return false;
 
             _movingShape = proposedShape;

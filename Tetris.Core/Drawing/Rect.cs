@@ -1,7 +1,6 @@
-﻿
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace Tetris.Winforms
+namespace Tetris.Core.Drawing
 {
     public class Rect
     {

@@ -1,4 +1,4 @@
-﻿namespace Tetris.Game.Controller
+﻿namespace Tetris.Core.Game.Controller
 {
     public enum Direction
     {

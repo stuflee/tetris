@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using Tetris.Helper;
 
-namespace Tetris.Game.Grid
+namespace Tetris.Core.Game.Grid
 {
-    public class GameGrid : IGameGrid
+    public class GameGrid : IEditableGameGrid
     {
         private List<ColouredPoint> _colouredPoints = new List<ColouredPoint>();
 
@@ -41,23 +39,21 @@ namespace Tetris.Game.Grid
             points.ForEach(p => _colouredPoints.Remove(p));
         }
 
-        public void AddRange(IEnumerable<ColouredPoint> points)
-        {
-            if (!AreInsideGridBounds(points.Select(p => p.Point)))
-                throw new ArgumentOutOfRangeException("One or more points are beyond the bounds of the grid.");
-
-            if (AreAlreadyPopulated(points.Select(p => p.Point)))
-                throw new ArgumentOutOfRangeException("One or more points are already filled.");
-
-            _colouredPoints.AddRange(points);
-        }
-
         public void Clear()
         {
             _colouredPoints.Clear();
         }
 
-        public bool CanAddPoints(IEnumerable<Point> points)
+        public bool TryAdd(IEnumerable<ColouredPoint> points)
+        {
+            if (!CanAdd(points))
+                return false;
+
+            _colouredPoints.AddRange(points);
+            return true;
+        }
+
+        public bool CanAdd(IEnumerable<ColouredPoint> points)
         {
             if (!AreInsideGridBounds(points))
                 return false;
@@ -68,14 +64,14 @@ namespace Tetris.Game.Grid
             return true;
         }
 
-        public bool AreInsideGridBounds(IEnumerable<Point> points)
+        private bool AreInsideGridBounds(IEnumerable<ColouredPoint> points)
         {
-            return !points.Any(point => !point.IsWithinBounds(Width - 1, Height - 1));
+            return !points.Any(cp => !cp.Point.IsWithinBounds(Width - 1, Height - 1));
         }
 
-        public bool AreAlreadyPopulated(IEnumerable<Point> points)
+        private bool AreAlreadyPopulated(IEnumerable<ColouredPoint> points)
         {
-            return points.Any(p => _colouredPoints.Any(cp => cp.Point == p));
+            return points.Any(cpO => _colouredPoints.Any(cpI => cpI.Point == cpO.Point));
         }
     }
 }

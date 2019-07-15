@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tetris.Game.Grid
+namespace Tetris.Core.Game.Grid
 {
     public interface IGameGrid : IEnumerable<ColouredPoint>
     {

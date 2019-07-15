@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Drawing;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Shape;
 
-namespace TetrisTests.Game.Shape
+namespace Tetris.Core.Tests.Game.Shape
 {
     [TestFixture]
     public class FourRotationShapeTests

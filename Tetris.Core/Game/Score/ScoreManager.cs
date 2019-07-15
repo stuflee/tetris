@@ -1,7 +1,6 @@
 ﻿using System;
-using Tetris.Game.Grid;
 
-namespace Tetris.Game.Score
+namespace Tetris.Core.Game.Score
 {
     public delegate void ScoreUpdated(int newScore);
 

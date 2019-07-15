@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Tetris.Game.Colors
+namespace Tetris.Core.Game.Colors
 {
     public class ColorFactory : RandomSelector<Color>
     {

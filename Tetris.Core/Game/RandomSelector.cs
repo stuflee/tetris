@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Tetris.Game
+namespace Tetris.Core.Game
 {
     public class RandomSelector<T> : IFactory<T>
     {

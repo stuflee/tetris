@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using Tetris.Game;
+using Tetris.Core.Game;
 
-namespace TetrisTests.Game
+namespace Tetris.Core.Tests.Game
 {
     [TestFixture]
     public class RandomSelectorTests

@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using Tetris.Game.Grid;
+using Tetris.Core.Drawing;
+using Tetris.Core.Game.Grid;
 
 namespace Tetris.Winforms
 {

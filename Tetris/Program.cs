@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Tetris.Game;
-using Tetris.Game.Colors;
-using Tetris.Game.Controller;
-using Tetris.Game.Grid;
-using Tetris.Game.Score;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Colors;
+using Tetris.Core.Game.Controller;
+using Tetris.Core.Game.Grid;
+using Tetris.Core.Game.Score;
+using Tetris.Core.Game.Shape;
 using Tetris.Helper;
 using Tetris.Winforms;
 
@@ -36,9 +35,9 @@ namespace Tetris
                 previewGameGrid.Clear();
                 var nextShape = shapeFactory.PeekNext();
                 var nextColour = colorFactory.PeekNext();
-                previewGameGrid.AddRange(
+                previewGameGrid.TryAdd(
                     Array.ConvertAll(nextShape.Points,
-                    p => new ColouredPoint(nextColour, p.Move(new Point((previewGameGrid.Width-1) / 2, 2)))));
+                    p => new ColouredPoint(nextColour, p.Move(new Point((previewGameGrid.Width-1) / 2, 3)))));
             };
 
             var form = new TetrisForm();

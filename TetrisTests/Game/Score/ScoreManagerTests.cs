@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Tetris.Game.Score;
+using Tetris.Core.Game.Score;
 
-namespace TetrisTests.Game.Score
+namespace Tetris.Core.Tests.Game.Score
 {
     [TestFixture]
     public class ScoreManagerTests

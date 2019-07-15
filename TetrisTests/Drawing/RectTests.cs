@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using Tetris.Renderer;
 using System.Drawing;
+using Tetris.Core.Drawing;
 
-namespace TetrisTests.Winforms
+namespace Tetris.Core.Tests.Drawing
 {
     [TestFixture]
     public class RectTests

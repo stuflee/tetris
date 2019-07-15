@@ -4,22 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Tetris.Game.Grid;
-using Tetris.Game.Shape;
+using Tetris.Core.Game.Grid;
+using Tetris.Core.Game.Shape;
 using Tetris.Helper;
 
-namespace TetrisTests.Game.Grid
+namespace Tetris.Core.Tests.Game.Grid
 {
     [TestFixture]
     public class GameGridShapeDecoratorTests
     {
         private GameGridShapeDecorator gameGridDecorator;
-        private Mock<GameGrid> gridMock;
+        private Mock<IEditableGameGrid> gridMock;
 
         [SetUp]
         public virtual void Setup()
         {
-            gridMock = new Mock<GameGrid>();
+            gridMock = new Mock<IEditableGameGrid>();
             //Setup good standard sizes.
             gridMock.Setup(m => m.Width).Returns(8);
             gridMock.Setup(m => m.Height).Returns(20);
@@ -114,7 +114,7 @@ namespace TetrisTests.Game.Grid
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
 
-                gridMock.Setup(p => p.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(false);
+                gridMock.Setup(p => p.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(false);
 
                 var canCommit = gameGridDecorator.CommitShape();
                 Assert.False(canCommit);
@@ -135,14 +135,14 @@ namespace TetrisTests.Game.Grid
                 gameGridDecorator.SetShape(shapeMock.Object, color);
 
                 gridMock.Setup(p => p.GetEnumerator()).Returns(gridPointList.GetEnumerator());
-                gridMock.Setup(p => p.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(true);
+                gridMock.Setup(p => p.TryAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(true);
 
                 var canCommit = gameGridDecorator.CommitShape();
-                Assert.True(canCommit);
+                Assert.True(canCommit, "Expected to be able to commit the shape but could not.");
 
                 var outputPoints = gameGridDecorator.ToList();
 
-                Assert.AreEqual(gridPointList.Count, outputPoints.Count);
+                Assert.AreEqual(gridPointList.Count, outputPoints.Count, string.Format("Expected the final count of the grid to be {0} but was {1}", gridPointList.Count, outputPoints.Count));
                 Assert.AreEqual(gridPointList[0], outputPoints[0]);
             }
         }
@@ -166,7 +166,7 @@ namespace TetrisTests.Game.Grid
                     new ColouredPoint(color, new Point(1,1))
                 };
 
-                gridMock = new Mock<GameGrid>();
+                gridMock = new Mock<IEditableGameGrid>();
                 //Setup good standard sizes.
                 gridMock.Setup(m => m.Width).Returns(5);
                 gridMock.Setup(m => m.Height).Returns(5);
@@ -203,7 +203,7 @@ namespace TetrisTests.Game.Grid
 
                 //Due to complexity of this method use a real GameGrid.  Does increase chance of failure.
                 var gameGrid = new GameGrid(5, 5);
-                gameGrid.AddRange(points);
+                gameGrid.TryAdd(points);
 
                 gameGridDecorator = new GameGridShapeDecorator(gameGrid);
                 var result = gameGridDecorator.ClearFullRows();
@@ -230,7 +230,7 @@ namespace TetrisTests.Game.Grid
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
 
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(false);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(false);
 
                 Assert.False(gameGridDecorator.MoveLeft());
             }
@@ -243,7 +243,7 @@ namespace TetrisTests.Game.Grid
                 var shapeMock = new Mock<ITetrisShape>();
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(true);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(true);
 
                 Assert.True(gameGridDecorator.MoveLeft());
             }
@@ -266,7 +266,7 @@ namespace TetrisTests.Game.Grid
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
 
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(false);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(false);
 
                 Assert.False(gameGridDecorator.MoveRight());
             }
@@ -279,7 +279,7 @@ namespace TetrisTests.Game.Grid
                 var shapeMock = new Mock<ITetrisShape>();
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(true);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(true);
 
                 Assert.True(gameGridDecorator.MoveRight());
             }
@@ -302,7 +302,7 @@ namespace TetrisTests.Game.Grid
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
 
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(false);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(false);
 
                 Assert.False(gameGridDecorator.MoveDown());
             }
@@ -315,7 +315,7 @@ namespace TetrisTests.Game.Grid
                 var shapeMock = new Mock<ITetrisShape>();
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 gameGridDecorator.SetShape(shapeMock.Object, color);
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(true);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(true);
 
                 Assert.True(gameGridDecorator.MoveDown());
             }
@@ -339,7 +339,7 @@ namespace TetrisTests.Game.Grid
                 shapeMock.Setup(p => p.Rotate()).Returns(shapeMock.Object);
                 gameGridDecorator.SetShape(shapeMock.Object, color);
 
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(false);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(false);
 
                 Assert.False(gameGridDecorator.Rotate());
             }
@@ -353,7 +353,7 @@ namespace TetrisTests.Game.Grid
                 shapeMock.Setup(p => p.Points).Returns(shapePointList.ToArray());
                 shapeMock.Setup(p => p.Rotate()).Returns(shapeMock.Object);
                 gameGridDecorator.SetShape(shapeMock.Object, color);
-                gridMock.Setup(m => m.CanAddPoints(It.IsAny<IEnumerable<Point>>())).Returns(true);
+                gridMock.Setup(m => m.CanAdd(It.IsAny<IEnumerable<ColouredPoint>>())).Returns(true);
 
                 Assert.True(gameGridDecorator.Rotate());
             }

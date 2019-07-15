@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using Tetris.Game.Score;
+using Tetris.Core.Game.Score;
 
 namespace Tetris.Winforms
 {

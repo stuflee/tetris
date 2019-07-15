@@ -9,8 +9,8 @@
     <ProjectGuid>{08FCED8D-3295-4094-91B3-1FBC1A02D30F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TetrisTests</RootNamespace>
-    <AssemblyName>TetrisTests</AssemblyName>
+    <RootNamespace>Tetris.Core.Tests</RootNamespace>
+    <AssemblyName>Tetris.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -74,16 +74,16 @@
     <Compile Include="Game\Shape\FourRotationShapeTests.cs" />
     <Compile Include="Game\Shape\TetrisShapeFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Winforms\RectangleTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tetris\Tetris.csproj">
-      <Project>{7aa93c13-9de7-4cd3-aa65-88af2c489268}</Project>
-      <Name>Tetris</Name>
-    </ProjectReference>
+    <Compile Include="Drawing\RectTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tetris.Core\Tetris.Core.csproj">
+      <Project>{c9ba24a1-6a55-4c9d-8141-4fe854d8df77}</Project>
+      <Name>Tetris.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

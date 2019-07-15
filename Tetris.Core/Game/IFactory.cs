@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tetris.Game
+namespace Tetris.Core.Game
 {
     public interface IFactory<T>
     {
