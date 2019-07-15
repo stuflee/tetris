@@ -18,7 +18,7 @@ namespace TetrisTests.Game.Grid
                 int width = 100;
                 int height = 120;
 
-                var gameGrid = new StaticGameGrid(width, height);
+                var gameGrid = new GameGrid(width, height);
                 Assert.AreEqual(width, gameGrid.Width);
                 Assert.AreEqual(height, gameGrid.Height);
             }
@@ -26,7 +26,7 @@ namespace TetrisTests.Game.Grid
             [TestCase]
             public void WhenGridIsConstructedItsEmpty()
             {
-                var gameGrid = new StaticGameGrid(100, 120);
+                var gameGrid = new GameGrid(100, 120);
                 Assert.IsEmpty(gameGrid);
             }
         }
@@ -36,7 +36,7 @@ namespace TetrisTests.Game.Grid
             [TestCase]
             public void WhenAPointIsAddedItIsEnumerated()
             {
-                var gameGrid = new StaticGameGrid(100, 120);
+                var gameGrid = new GameGrid(100, 120);
                 var point = new ColouredPoint(Color.Red, new Point(1, 1));
                 gameGrid.AddRange( new[] { point });
 
@@ -56,7 +56,7 @@ namespace TetrisTests.Game.Grid
                     new ColouredPoint(Color.Red, new Point(1, 1)),
                     new ColouredPoint(Color.Green, new Point(1, 2))
                 };
-                var gameGrid = new StaticGameGrid(10, 10);
+                var gameGrid = new GameGrid(10, 10);
                 gameGrid.AddRange(points);
 
                 points.ForEach(p => Assert.True(gameGrid.ToList().Contains(p)));
@@ -67,7 +67,7 @@ namespace TetrisTests.Game.Grid
             public void WhenAddingTheSamePointTwiceAnExceptionIsThrown()
             {
                 var point = new ColouredPoint(Color.Red, new Point(1, 1));
-                var gameGrid = new StaticGameGrid(10, 10);
+                var gameGrid = new GameGrid(10, 10);
                 gameGrid.AddRange(new[] { point });
 
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => gameGrid.AddRange(new[] { point }));
@@ -80,7 +80,7 @@ namespace TetrisTests.Game.Grid
             public void WhenAddingAnOutOfRangePointAnExceptionIsThrown(int X, int Y)
             {
                 var point = new ColouredPoint(Color.Red, new Point(X, Y));
-                var gameGrid = new StaticGameGrid(10, 10);
+                var gameGrid = new GameGrid(10, 10);
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => gameGrid.AddRange(new[] { point }));
             }
         }
@@ -95,7 +95,7 @@ namespace TetrisTests.Game.Grid
                     new ColouredPoint(Color.Green, new Point(1, 2)),
                     new ColouredPoint(Color.Blue, new Point(2, 2))
                 };
-                var gameGrid = new StaticGameGrid(3, 3);
+                var gameGrid = new GameGrid(3, 3);
                 gameGrid.AddRange(points);
                 gameGrid.RemoveRange(new ColouredPoint[] { });
                 Assert.AreEqual(3, gameGrid.Count());
@@ -109,7 +109,7 @@ namespace TetrisTests.Game.Grid
                     new ColouredPoint(Color.Green, new Point(1, 2)),
                     new ColouredPoint(Color.Blue, new Point(2, 2))
                 };
-                var gameGrid = new StaticGameGrid(3, 3);
+                var gameGrid = new GameGrid(3, 3);
                 gameGrid.AddRange(points);
                 gameGrid.RemoveRange(new ColouredPoint[] { points [0]});
                 Assert.AreEqual(2, gameGrid.Count());
@@ -128,7 +128,7 @@ namespace TetrisTests.Game.Grid
                     new ColouredPoint(Color.Green, new Point(1, 2)),
                     new ColouredPoint(Color.Blue, new Point(2, 2))
                 };
-                var gameGrid = new StaticGameGrid(3, 3);
+                var gameGrid = new GameGrid(3, 3);
                 gameGrid.AddRange(points);
                 var countBefore = gameGrid.Count();
                 gameGrid.RemoveRange(points);
@@ -144,7 +144,7 @@ namespace TetrisTests.Game.Grid
             public void WhenGridIsEmptyPointsCanBeAdded()
             {
                 var point = new ColouredPoint(Color.Red, new Point(1, 1));
-                var gameGrid = new StaticGameGrid(10, 10);
+                var gameGrid = new GameGrid(10, 10);
 
                 Assert.True(gameGrid.CanAddPoints(new[] { point.Point }));
             }
@@ -153,7 +153,7 @@ namespace TetrisTests.Game.Grid
             public void WhenADuplicatePointIsUsedItCannotBeAdded()
             {
                 var point = new ColouredPoint(Color.Red, new Point(1, 1));
-                var gameGrid = new StaticGameGrid(10, 10);
+                var gameGrid = new GameGrid(10, 10);
                 gameGrid.AddRange(new[] { point });
 
                 Assert.False(gameGrid.CanAddPoints(new[] { point.Point }));
@@ -163,7 +163,7 @@ namespace TetrisTests.Game.Grid
             public void WhenAPointIsOutOfRangeItCannotBeAdded()
             {
                 var point = new ColouredPoint(Color.Red, new Point(30, 1));
-                var gameGrid = new StaticGameGrid(10, 10);
+                var gameGrid = new GameGrid(10, 10);
 
                 Assert.False(gameGrid.CanAddPoints(new[] { point.Point }));
             }

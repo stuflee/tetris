@@ -51,9 +51,9 @@
     <Compile Include="Game\Controller\IGameController.cs" />
     <Compile Include="Game\Grid\ColouredPoint.cs" />
     <Compile Include="Game\Grid\GameGrid.cs" />
-    <Compile Include="Game\Grid\GameGridManager.cs" />
+    <Compile Include="Game\Grid\GameGridShapeDecorator.cs" />
     <Compile Include="Game\Grid\IGameGrid.cs" />
-    <Compile Include="Game\Grid\IGameGridManager.cs" />
+    <Compile Include="Game\Grid\IGameGridShapeDecorator.cs" />
     <Compile Include="Game\Grid\PositionedShape.cs" />
     <Compile Include="Game\IFactory.cs" />
     <Compile Include="Game\RandomSelector.cs" />

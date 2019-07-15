@@ -32,7 +32,6 @@ namespace Tetris.Game
             finally
             {
                 _nextItemIndex = -1;
-                OnSelectionMade?.Invoke();
             }
         }
 
@@ -48,7 +47,5 @@ namespace Tetris.Game
         {
             get { return new ReadOnlyCollection<T>(_items); }
         }
-
-        public event Action OnSelectionMade;
     }
 }

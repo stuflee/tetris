@@ -9,10 +9,10 @@ namespace Tetris.Game.Controller
 
     public class GameController : IGameController
     {
-        private IGameGridManager _grid;
+        private IGameGridShapeDecorator _grid;
         private Dictionary<Direction, GameEventHandler> _events;
         
-        public GameController(IGameGridManager grid)
+        public GameController(IGameGridShapeDecorator grid)
         {
             _grid = grid ?? throw new ArgumentException("Grid cannot be null in creation of controller.");
 
@@ -25,11 +25,14 @@ namespace Tetris.Game.Controller
             };
         }
 
-        public void KeyPressed(Direction direction)
+        public bool KeyPressed(Direction direction)
         {
             GameEventHandler handler;
-            if (_events.TryGetValue(direction, out handler))
-                handler();
+            if (!_events.TryGetValue(direction, out handler))
+                return false;
+
+            handler();
+            return true;
         }
 
         public IDictionary<Direction, GameEventHandler> Events

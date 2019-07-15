@@ -7,13 +7,8 @@ namespace Tetris.Game.Score
 
     public class ScoreManager
     {
-        private IGameGridManager _gameGrid;
-
-        public ScoreManager(IGameGridManager gameGrid)
+        public ScoreManager()
         {
-            _gameGrid = gameGrid ?? throw new ArgumentException("GameGrid cannot be null");
-            _gameGrid.OnRowsRemoved += ProcessRowsRemoved;
-            _gameGrid.OnShapeLanded += ProcessShapeLanded;
         }
 
         public void ProcessShapeLanded()
@@ -25,11 +20,11 @@ namespace Tetris.Game.Score
         {
             if (rowsRemoved == 0)
                 return;
-
-            UpdateScore(500 * (2 ^ (rowsRemoved)));
+            
+            UpdateScore(500 * (int)Math.Round(Math.Pow(2, rowsRemoved)));
         }
 
-        public void UpdateScore(int addition)
+        private void UpdateScore(int addition)
         {
             Score += addition;
 

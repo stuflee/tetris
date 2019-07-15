@@ -31,6 +31,7 @@
             this.lblScore = new System.Windows.Forms.Label();
             this.lblScoreValue = new Tetris.Winforms.ScoreLabel();
             this.gamePanel = new Tetris.Winforms.GamePanel();
+            this.previewPanel = new Tetris.Winforms.GamePanel();
             this.SuspendLayout();
             // 
             // lblScore
@@ -60,17 +61,31 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gamePanel.GameGrid = null;
-            this.gamePanel.Location = new System.Drawing.Point(68, 65);
+            this.gamePanel.Location = new System.Drawing.Point(12, 193);
             this.gamePanel.Name = "gamePanel";
-            this.gamePanel.Size = new System.Drawing.Size(96, 304);
+            this.gamePanel.Size = new System.Drawing.Size(160, 470);
             this.gamePanel.TabIndex = 0;
+            // 
+            // previewPanel
+            // 
+            this.previewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.previewPanel.GameGrid = null;
+            this.previewPanel.Location = new System.Drawing.Point(14, 41);
+            this.previewPanel.Name = "previewPanel";
+            this.previewPanel.Size = new System.Drawing.Size(158, 146);
+            this.previewPanel.TabIndex = 1;
+            this.previewPanel.XSize = 15;
+            this.previewPanel.YSize = 15;
             // 
             // TetrisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(241, 396);
+            this.ClientSize = new System.Drawing.Size(305, 675);
+            this.Controls.Add(this.previewPanel);
             this.Controls.Add(this.lblScoreValue);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.gamePanel);
@@ -88,6 +103,7 @@
         private GamePanel gamePanel;
         private System.Windows.Forms.Label lblScore;
         private ScoreLabel lblScoreValue;
+        private GamePanel previewPanel;
     }
 }
 

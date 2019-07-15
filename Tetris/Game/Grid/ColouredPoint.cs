@@ -41,5 +41,10 @@ namespace Tetris.Game.Grid
         {
             return Color.GetHashCode() + 17 * Point.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0}, {1}", Color.Name, Point.ToString());
+        }
     }
 }

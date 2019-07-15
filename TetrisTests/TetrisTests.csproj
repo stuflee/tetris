@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Grid\GameGridShapeDecoratorTests.cs" />
     <Compile Include="Game\RandomSelectorTests.cs" />
     <Compile Include="Game\Colors\ColorFactoryTests.cs" />
     <Compile Include="Game\Controller\GameControllerTests.cs" />

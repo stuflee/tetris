@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Drawing;
 using Tetris.Game.Grid;
@@ -33,6 +34,35 @@ namespace TetrisTests.Game.Grid
                 var point = new Point(X, Y);
                 var shape = new PositionedShape(new StaticShape(new[] { new Point(1, 1) }), Color.Red, point);
                 Assert.AreEqual(point, shape.Location);
+            }
+        }
+
+        public class MoveTests : PositionedShapeTests
+        {
+            [TestCase(1, 1, 1, 1)]
+            [TestCase(1, 2, 3, 4)]
+            public void WhenMoveIsCalledNewShapeIsMoved(int X, int Y, int offsetX, int offsetY)
+            {
+                var shapeMock = new Mock<ITetrisShape>();
+                var shape = new PositionedShape(shapeMock.Object, Color.Red, new Point(X, Y));
+                var movedShape = shape.Move(new Point(offsetX, offsetY));
+                Assert.AreEqual(movedShape.Location, new Point(X + offsetX, Y + offsetY));
+            }
+        }
+
+        public class RotateTests : PositionedShapeTests
+        {
+            [TestCase]
+            public void WhenRotateIsCalledNRotatedShapeIsReturned()
+            {
+                var shapeMock = new Mock<ITetrisShape>();
+                var rotatedShape = new Mock<ITetrisShape>();
+
+                shapeMock.Setup(p => p.Rotate()).Returns(rotatedShape.Object);
+
+                var shape = new PositionedShape(shapeMock.Object, Color.Red, new Point(0, 0));
+                var movedShape = shape.Rotate();
+                Assert.AreEqual(rotatedShape.Object, movedShape.Shape);
             }
         }
     }

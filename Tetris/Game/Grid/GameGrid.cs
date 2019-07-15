@@ -7,11 +7,11 @@ using Tetris.Helper;
 
 namespace Tetris.Game.Grid
 {
-    public class StaticGameGrid : IGameGrid
+    public class GameGrid : IGameGrid
     {
         private List<ColouredPoint> _colouredPoints = new List<ColouredPoint>();
 
-        public StaticGameGrid(int width, int height)
+        public GameGrid(int width, int height)
         {
             Width = width;
             Height = height;

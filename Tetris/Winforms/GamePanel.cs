@@ -9,8 +9,7 @@ namespace Tetris.Winforms
 {
     public class GamePanel : Panel
     {
-        private GameGridManager _gameGrid;
-        private TetrisShapeFactory _shapeFactory;
+        private IGameGrid _gameGrid;
         private int _xSize;
         private int _ySize;
         private Rect _baseRect;
@@ -19,12 +18,31 @@ namespace Tetris.Winforms
         {
             DoubleBuffered = true;
             Paint += Panel_Paint;
-            _xSize = 20;
-            _ySize = 20;
-            _baseRect = new Rect(_xSize, _ySize);
+            XSize = 20;
+            YSize = 20;
         }
 
-        public GameGridManager GameGrid
+        public int XSize
+        {
+            get { return _xSize; }
+            set
+            {
+                _xSize = value;
+                _baseRect = new Rect(_xSize, _ySize);
+            }
+        }
+
+        public int YSize
+        {
+            get { return _ySize; }
+            set
+            {
+                _ySize = value;
+                _baseRect = new Rect(_xSize, _ySize);
+            }
+        }
+
+        public IGameGrid GameGrid
         {
             get
             {
@@ -36,33 +54,10 @@ namespace Tetris.Winforms
                 if (value == null)
                     return;
 
-                if (_gameGrid != null)
-                    _gameGrid.OnGridUpdated -= Refresh;
-
                 _gameGrid = value;
-                _gameGrid.OnGridUpdated += Refresh;
                 Width = _gameGrid.Width * _xSize + 1;
                 Height = _gameGrid.Height * _ySize + 1;
             }
-        }
-
-        public TetrisShapeFactory ShapeFactory
-        {
-            get { return _shapeFactory; }
-            set
-            {
-                if (_shapeFactory != null)
-                    _shapeFactory.OnSelectionMade -= UpdateGrid;
-
-                _shapeFactory = value;
-                if (value != null)
-                    _shapeFactory.OnSelectionMade += UpdateGrid;
-            }
-        }
-
-        private void UpdateGrid()
-        {
-            throw new NotImplementedException();
         }
 
         public void Draw(Graphics g, Point p, Color color)
