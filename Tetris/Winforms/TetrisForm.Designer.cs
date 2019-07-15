@@ -56,7 +56,7 @@
             this.previewPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.previewPanel.GameGrid = null;
             this.previewPanel.Location = new System.Drawing.Point(291, 46);
-            this.previewPanel.Margin = new System.Windows.Forms.Padding(15);
+            this.previewPanel.Margin = new System.Windows.Forms.Padding(10);
             this.previewPanel.Name = "previewPanel";
             this.previewPanel.Size = new System.Drawing.Size(133, 146);
             this.previewPanel.TabIndex = 2;
@@ -68,7 +68,7 @@
             this.gamePanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gamePanel.GameGrid = null;
             this.gamePanel.Location = new System.Drawing.Point(15, 222);
-            this.gamePanel.Margin = new System.Windows.Forms.Padding(15);
+            this.gamePanel.Margin = new System.Windows.Forms.Padding(10);
             this.gamePanel.Name = "gamePanel";
             this.gamePanel.Size = new System.Drawing.Size(686, 722);
             this.gamePanel.TabIndex = 3;
